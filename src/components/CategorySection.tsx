@@ -1,4 +1,4 @@
-import type { GroceryCategory, SelectedItems } from '../types';
+import type { GroceryCategory, SelectedItems } from "../types";
 
 interface CategorySectionProps {
   category: GroceryCategory;
@@ -6,7 +6,11 @@ interface CategorySectionProps {
   onToggleItem: (itemId: string) => void;
 }
 
-export function CategorySection({ category, selectedItems, onToggleItem }: CategorySectionProps) {
+export function CategorySection({
+  category,
+  selectedItems,
+  onToggleItem,
+}: CategorySectionProps) {
   return (
     <section>
       <h3>{category.name}</h3>

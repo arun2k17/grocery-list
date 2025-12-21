@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { groceryCategories } from '../data/groceryItems';
-import type { SelectedItems } from '../types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { CategorySection } from './CategorySection';
+import { useState } from "react";
+import { groceryCategories } from "../data/groceryItems";
+import type { SelectedItems } from "../types";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { CategorySection } from "./CategorySection";
 
 export function GroceryList() {
-  const [selectedItems, setSelectedItems] = useLocalStorage<SelectedItems>('grocerySelections', {});
+  const [selectedItems, setSelectedItems] = useLocalStorage<SelectedItems>(
+    "grocerySelections",
+    {}
+  );
   const [copySuccess, setCopySuccess] = useState(false);
 
   const toggleItem = (itemId: string) => {
@@ -21,29 +24,31 @@ export function GroceryList() {
 
   const copyToClipboard = async () => {
     // Build markdown format grouped by category
-    const lines: string[] = ['# Grocery List\n'];
+    const lines: string[] = ["# Grocery List\n"];
 
     groceryCategories.forEach((category) => {
-      const selectedInCategory = category.items.filter((item) => selectedItems[item.id]);
+      const selectedInCategory = category.items.filter(
+        (item) => selectedItems[item.id]
+      );
 
       if (selectedInCategory.length > 0) {
         lines.push(`## ${category.name}\n`);
         selectedInCategory.forEach((item) => {
           lines.push(`- [ ] ${item.name}`);
         });
-        lines.push(''); // Empty line between categories
+        lines.push(""); // Empty line between categories
       }
     });
 
-    const text = lines.join('\n');
+    const text = lines.join("\n");
 
     try {
       await navigator.clipboard.writeText(text);
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (error) {
-      console.error('Failed to copy to clipboard:', error);
-      alert('Failed to copy to clipboard');
+      console.error("Failed to copy to clipboard:", error);
+      alert("Failed to copy to clipboard");
     }
   };
 
@@ -59,9 +64,13 @@ export function GroceryList() {
       <main>
         <div className="actions">
           <button onClick={copyToClipboard} disabled={selectedCount === 0}>
-            {copySuccess ? '✓ Copied!' : `📋 Copy Selected (${selectedCount})`}
+            {copySuccess ? "✓ Copied!" : `📋 Copy Selected (${selectedCount})`}
           </button>
-          <button onClick={clearAll} className="secondary" disabled={selectedCount === 0}>
+          <button
+            onClick={clearAll}
+            className="secondary"
+            disabled={selectedCount === 0}
+          >
             🗑️ Clear All
           </button>
         </div>
