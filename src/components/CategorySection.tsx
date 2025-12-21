@@ -1,4 +1,5 @@
 import type { GroceryCategory, SelectedItems } from "../types";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface CategorySectionProps {
   category: GroceryCategory;
@@ -11,9 +12,11 @@ export function CategorySection({
   selectedItems,
   onToggleItem,
 }: CategorySectionProps) {
+  const { language } = useLanguage();
+
   return (
     <section>
-      <h3>{category.name}</h3>
+      <h3>{category.name[language]}</h3>
       <fieldset>
         {category.items.map((item) => (
           <label key={item.id}>
@@ -22,7 +25,7 @@ export function CategorySection({
               checked={selectedItems[item.id] || false}
               onChange={() => onToggleItem(item.id)}
             />
-            {item.name}
+            {item.name[language]}
           </label>
         ))}
       </fieldset>

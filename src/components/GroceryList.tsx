@@ -2,6 +2,7 @@ import { useState } from "react";
 import { groceryCategories } from "../data/groceryItems";
 import type { SelectedItems } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useLanguage } from "../contexts/LanguageContext";
 import { CategorySection } from "./CategorySection";
 
 export function GroceryList() {
@@ -10,6 +11,7 @@ export function GroceryList() {
     {}
   );
   const [copySuccess, setCopySuccess] = useState(false);
+  const { language, setLanguage } = useLanguage();
 
   const toggleItem = (itemId: string) => {
     setSelectedItems((prev: SelectedItems) => ({
@@ -23,8 +25,9 @@ export function GroceryList() {
   };
 
   const copyToClipboard = async () => {
-    // Build markdown format grouped by category
-    const lines: string[] = ["# Grocery List\n"];
+    // Build markdown format grouped by category in current language
+    const listTitle = language === "ta" ? "மளிகை பட்டியல்" : "Grocery List";
+    const lines: string[] = [`# ${listTitle}\n`];
 
     groceryCategories.forEach((category) => {
       const selectedInCategory = category.items.filter(
@@ -32,9 +35,9 @@ export function GroceryList() {
       );
 
       if (selectedInCategory.length > 0) {
-        lines.push(`## ${category.name}\n`);
+        lines.push(`## ${category.name[language]}\n`);
         selectedInCategory.forEach((item) => {
-          lines.push(`- [ ] ${item.name}`);
+          lines.push(`- [ ] ${item.name[language]}`);
         });
         lines.push(""); // Empty line between categories
       }
@@ -53,25 +56,58 @@ export function GroceryList() {
   };
 
   const selectedCount = Object.values(selectedItems).filter(Boolean).length;
+  const title = language === "ta" ? "மளிகை பட்டியல்" : "Grocery List";
+  const subtitle =
+    language === "ta"
+      ? "வாங்க வேண்டிய பொருட்களைத் தேர்ந்தெடுக்கவும்"
+      : "Select items you need to buy";
+  const copyButtonText = copySuccess
+    ? language === "ta"
+      ? "✓ நகலெடுக்கப்பட்டது!"
+      : "✓ Copied!"
+    : language === "ta"
+    ? `📋 தேர்ந்தெடுத்ததை நகலெடு (${selectedCount})`
+    : `📋 Copy Selected (${selectedCount})`;
+  const clearButtonText =
+    language === "ta" ? "🗑️ அனைத்தையும் அழி" : "🗑️ Clear All";
+  const footerText =
+    language === "ta"
+      ? "தேர்வுகள் உங்கள் உலாவியில் தானாகவே சேமிக்கப்படுகின்றன"
+      : "Selections saved automatically in your browser";
 
   return (
     <div className="container">
       <header>
-        <h1>🛒 Grocery List</h1>
-        <p>Select items you need to buy</p>
+        <h1>🛒 {title}</h1>
+        <p>{subtitle}</p>
+        <div className="language-picker">
+          <button
+            onClick={() => setLanguage("en")}
+            className={language === "en" ? "active" : "link"}
+          >
+            English
+          </button>
+          <span> | </span>
+          <button
+            onClick={() => setLanguage("ta")}
+            className={language === "ta" ? "active" : "link"}
+          >
+            தமிழ்
+          </button>
+        </div>
       </header>
 
       <main>
         <div className="actions">
           <button onClick={copyToClipboard} disabled={selectedCount === 0}>
-            {copySuccess ? "✓ Copied!" : `📋 Copy Selected (${selectedCount})`}
+            {copyButtonText}
           </button>
           <button
             onClick={clearAll}
             className="secondary"
             disabled={selectedCount === 0}
           >
-            🗑️ Clear All
+            {clearButtonText}
           </button>
         </div>
 
@@ -86,7 +122,7 @@ export function GroceryList() {
       </main>
 
       <footer>
-        <small>Selections saved automatically in your browser</small>
+        <small>{footerText}</small>
       </footer>
     </div>
   );

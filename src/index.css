@@ -79,6 +79,44 @@ header h1 {
 header p {
   color: var(--pico-muted-color);
   margin: 0;
+  margin-bottom: 1rem;
+}
+
+/* Language Picker */
+.language-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.language-picker button {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--pico-muted-color);
+  transition: color 0.2s;
+}
+
+.language-picker button.link {
+  text-decoration: underline;
+}
+
+.language-picker button.link:hover {
+  color: var(--pico-primary);
+}
+
+.language-picker button.active {
+  color: var(--pico-primary);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.language-picker span {
+  color: var(--pico-muted-color);
 }
 
 /* Footer */

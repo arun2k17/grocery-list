@@ -1,8 +1,13 @@
 import { GroceryList } from "./components/GroceryList";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import "./App.css";
 
 function App() {
-  return <GroceryList />;
+  return (
+    <LanguageProvider>
+      <GroceryList />
+    </LanguageProvider>
+  );
 }
 
 export default App;
