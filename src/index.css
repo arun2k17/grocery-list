@@ -1,0 +1,97 @@
+/* Mobile-first optimizations */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Ensure container is mobile-friendly */
+.container {
+  max-width: 100%;
+  padding: 1rem;
+}
+
+/* Large touch targets for mobile */
+label {
+  display: block;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  font-size: 1rem;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  cursor: pointer;
+}
+
+/* Action buttons */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  background: var(--pico-background-color);
+  padding: 1rem 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.actions button {
+  flex: 1;
+  margin: 0;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+}
+
+/* Category sections */
+section {
+  margin-bottom: 2rem;
+}
+
+section h3 {
+  margin-bottom: 1rem;
+  color: var(--pico-primary);
+  border-bottom: 2px solid var(--pico-primary);
+  padding-bottom: 0.5rem;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: var(--pico-muted-color);
+  margin: 0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  color: var(--pico-muted-color);
+}
+
+/* Desktop optimizations */
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+}

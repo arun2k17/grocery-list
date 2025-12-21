@@ -1,0 +1,161 @@
+import type { GroceryCategory } from '../types';
+
+export const groceryCategories: GroceryCategory[] = [
+  {
+    id: 'vegetables',
+    name: 'Vegetables',
+    items: [
+      { id: 'tomato', name: 'Tomato' },
+      { id: 'onion', name: 'Onion (Vengayam)' },
+      { id: 'potato', name: 'Potato (Urulaikizhangu)' },
+      { id: 'carrot', name: 'Carrot' },
+      { id: 'beans', name: 'Beans' },
+      { id: 'brinjal', name: 'Brinjal (Kathiri)' },
+      { id: 'ladiesfinger', name: "Ladies' Finger (Vendakkai)" },
+      { id: 'drumstick', name: 'Drumstick (Murungakkai)' },
+      { id: 'cabbage', name: 'Cabbage' },
+      { id: 'cauliflower', name: 'Cauliflower' },
+      { id: 'beetroot', name: 'Beetroot' },
+      { id: 'radish', name: 'Radish (Mullangi)' },
+      { id: 'cucumber', name: 'Cucumber (Vellarikai)' },
+      { id: 'bittergourd', name: 'Bitter Gourd (Pavakkai)' },
+      { id: 'bottlegourd', name: 'Bottle Gourd (Surakkai)' },
+      { id: 'ridgegourd', name: 'Ridge Gourd (Peerkangai)' },
+      { id: 'snakegourd', name: 'Snake Gourd (Pudalangai)' },
+      { id: 'pumpkin', name: 'Pumpkin (Poosanikai)' },
+      { id: 'greenchilli', name: 'Green Chilli' },
+      { id: 'coriander', name: 'Coriander Leaves (Kothamalli)' },
+      { id: 'curry', name: 'Curry Leaves (Karuveppilai)' },
+      { id: 'ginger', name: 'Ginger (Inji)' },
+      { id: 'garlic', name: 'Garlic (Poondu)' },
+    ]
+  },
+  {
+    id: 'fruits',
+    name: 'Fruits',
+    items: [
+      { id: 'banana', name: 'Banana (Vazhaipazham)' },
+      { id: 'apple', name: 'Apple' },
+      { id: 'orange', name: 'Orange' },
+      { id: 'mango', name: 'Mango (Mangai)' },
+      { id: 'papaya', name: 'Papaya (Pappali)' },
+      { id: 'watermelon', name: 'Watermelon' },
+      { id: 'grapes', name: 'Grapes' },
+      { id: 'pomegranate', name: 'Pomegranate (Mathulai)' },
+      { id: 'guava', name: 'Guava (Koyya)' },
+      { id: 'lemon', name: 'Lemon (Elumichai)' },
+    ]
+  },
+  {
+    id: 'pulses',
+    name: 'Pulses & Lentils',
+    items: [
+      { id: 'tuvar', name: 'Toor Dal (Thuvaram Paruppu)' },
+      { id: 'moong', name: 'Moong Dal (Payatham Paruppu)' },
+      { id: 'chana', name: 'Chana Dal (Kadalai Paruppu)' },
+      { id: 'urad', name: 'Urad Dal (Ulundu)' },
+      { id: 'masoor', name: 'Masoor Dal (Mysore Paruppu)' },
+      { id: 'rajma', name: 'Rajma (Kidney Beans)' },
+      { id: 'blackchana', name: 'Black Chana (Karuppu Kadalai)' },
+      { id: 'greengram', name: 'Green Gram Whole (Paasi Payaru)' },
+    ]
+  },
+  {
+    id: 'grains',
+    name: 'Grains & Cereals',
+    items: [
+      { id: 'rice', name: 'Rice (Arisi)' },
+      { id: 'idlyrice', name: 'Idly Rice (Idly Arisi)' },
+      { id: 'wheat', name: 'Wheat (Gothumai)' },
+      { id: 'rava', name: 'Rava/Semolina (Ravai)' },
+      { id: 'poha', name: 'Poha/Aval' },
+      { id: 'vermicelli', name: 'Vermicelli (Semiya)' },
+      { id: 'cornflour', name: 'Corn Flour' },
+      { id: 'maida', name: 'Maida (All Purpose Flour)' },
+      { id: 'besan', name: 'Besan (Kadalai Maavu)' },
+      { id: 'riceflour', name: 'Rice Flour (Arisi Maavu)' },
+    ]
+  },
+  {
+    id: 'spices',
+    name: 'Spices',
+    items: [
+      { id: 'turmeric', name: 'Turmeric Powder (Manjal Podi)' },
+      { id: 'chilli', name: 'Red Chilli Powder (Milagai Podi)' },
+      { id: 'corianderpowder', name: 'Coriander Powder (Kothamalli Podi)' },
+      { id: 'cumin', name: 'Cumin Seeds (Jeeragam)' },
+      { id: 'mustard', name: 'Mustard Seeds (Kadugu)' },
+      { id: 'fenugreek', name: 'Fenugreek (Vendhayam)' },
+      { id: 'blackpepper', name: 'Black Pepper (Milagu)' },
+      { id: 'cardamom', name: 'Cardamom (Elaichi)' },
+      { id: 'cloves', name: 'Cloves (Grambu)' },
+      { id: 'cinnamon', name: 'Cinnamon (Pattai)' },
+      { id: 'bayleaf', name: 'Bay Leaf (Biryani Ilai)' },
+      { id: 'starnise', name: 'Star Anise (Annasipoo)' },
+      { id: 'fennel', name: 'Fennel Seeds (Sombu)' },
+      { id: 'asafoetida', name: 'Asafoetida (Perungayam)' },
+      { id: 'garam', name: 'Garam Masala' },
+      { id: 'sambar', name: 'Sambar Powder' },
+      { id: 'rasam', name: 'Rasam Powder' },
+    ]
+  },
+  {
+    id: 'dairy',
+    name: 'Dairy & Milk Products',
+    items: [
+      { id: 'milk', name: 'Milk (Paal)' },
+      { id: 'curd', name: 'Curd (Thayir)' },
+      { id: 'butter', name: 'Butter (Vennai)' },
+      { id: 'paneer', name: 'Paneer' },
+      { id: 'cheese', name: 'Cheese' },
+      { id: 'cream', name: 'Cream' },
+    ]
+  },
+  {
+    id: 'oil',
+    name: 'Oil & Ghee',
+    items: [
+      { id: 'sunflower', name: 'Sunflower Oil' },
+      { id: 'coconut', name: 'Coconut Oil (Thengai Ennai)' },
+      { id: 'sesame', name: 'Sesame Oil (Nalla Ennai)' },
+      { id: 'ghee', name: 'Ghee (Nei)' },
+      { id: 'groundnut', name: 'Groundnut Oil (Kadalai Ennai)' },
+    ]
+  },
+  {
+    id: 'pooja',
+    name: 'Pooja Items',
+    items: [
+      { id: 'camphor', name: 'Camphor (Karpuram)' },
+      { id: 'agarbatti', name: 'Agarbatti/Incense Sticks' },
+      { id: 'kumkum', name: 'Kumkum' },
+      { id: 'vibhuti', name: 'Vibhuti (Sacred Ash)' },
+      { id: 'flowers', name: 'Flowers (Poo)' },
+      { id: 'coconutpooja', name: 'Coconut (for Pooja)' },
+      { id: 'bananapoooja', name: 'Banana (for Pooja)' },
+      { id: 'betelleaves', name: 'Betel Leaves (Vetrilai)' },
+      { id: 'betelnuts', name: 'Betel Nuts (Paakku)' },
+      { id: 'turmericroot', name: 'Turmeric Root (Manjal)' },
+    ]
+  },
+  {
+    id: 'household',
+    name: 'Household Items',
+    items: [
+      { id: 'salt', name: 'Salt (Uppu)' },
+      { id: 'sugar', name: 'Sugar (Sakkarai)' },
+      { id: 'jaggery', name: 'Jaggery (Vellam)' },
+      { id: 'tea', name: 'Tea Powder' },
+      { id: 'coffee', name: 'Coffee Powder' },
+      { id: 'tamarind', name: 'Tamarind (Puli)' },
+      { id: 'coconutdry', name: 'Dry Coconut (Copra/Thengai)' },
+      { id: 'peanuts', name: 'Peanuts (Kadalai)' },
+      { id: 'cashew', name: 'Cashew Nuts (Mundiri)' },
+      { id: 'raisins', name: 'Raisins (Dhraksha)' },
+      { id: 'detergent', name: 'Detergent' },
+      { id: 'soap', name: 'Soap' },
+      { id: 'toothpaste', name: 'Toothpaste' },
+      { id: 'shampoo', name: 'Shampoo' },
+    ]
+  },
+];
