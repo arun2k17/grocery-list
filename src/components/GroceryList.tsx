@@ -3,6 +3,7 @@ import { groceryCategories } from "../data/groceryItems";
 import type { SelectedItems } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useNFC } from "../hooks/useNFC";
 import { CategorySection } from "./CategorySection";
 
 export function GroceryList() {
@@ -12,6 +13,13 @@ export function GroceryList() {
   );
   const [copySuccess, setCopySuccess] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const {
+    status: nfcStatus,
+    error: nfcError,
+    isSupported: isNFCSupported,
+    writeData,
+    readData,
+  } = useNFC();
 
   const toggleItem = (itemId: string) => {
     setSelectedItems((prev: SelectedItems) => ({
@@ -22,6 +30,20 @@ export function GroceryList() {
 
   const clearAll = () => {
     setSelectedItems({});
+  };
+
+  const handleNFCShare = async () => {
+    await writeData(selectedItems);
+  };
+
+  const handleNFCReceive = async () => {
+    await readData((receivedData) => {
+      // Merge with existing selections
+      setSelectedItems((prev: SelectedItems) => ({
+        ...prev,
+        ...receivedData,
+      }));
+    });
   };
 
   const copyToClipboard = async () => {
@@ -70,6 +92,34 @@ export function GroceryList() {
     : `📋 Copy Selected (${selectedCount})`;
   const clearButtonText =
     language === "ta" ? "🗑️ அனைத்தையும் அழி" : "🗑️ Clear All";
+
+  // NFC button texts
+  const nfcShareText =
+    nfcStatus === "writing"
+      ? language === "ta"
+        ? "📱 நெருக்கமாக வைக்கவும்..."
+        : "📱 Hold steady..."
+      : nfcStatus === "success" && nfcError === null
+      ? language === "ta"
+        ? "✓ பகிரப்பட்டது!"
+        : "✓ Shared!"
+      : language === "ta"
+      ? "📱 பகிர்"
+      : "📱 Share";
+
+  const nfcReceiveText =
+    nfcStatus === "reading"
+      ? language === "ta"
+        ? "📱 தொடவும்..."
+        : "📱 Tap phone..."
+      : nfcStatus === "success" && nfcError === null
+      ? language === "ta"
+        ? "✓ பெறப்பட்டது!"
+        : "✓ Received!"
+      : language === "ta"
+      ? "📱 பெறு"
+      : "📱 Receive";
+
   const footerText =
     language === "ta"
       ? "தேர்வுகள் உங்கள் உலாவியில் தானாகவே சேமிக்கப்படுகின்றன"
@@ -110,6 +160,40 @@ export function GroceryList() {
             {clearButtonText}
           </button>
         </div>
+
+        {isNFCSupported && (
+          <div className="nfc-actions">
+            <button
+              onClick={handleNFCShare}
+              disabled={
+                selectedCount === 0 ||
+                nfcStatus === "writing" ||
+                nfcStatus === "reading"
+              }
+              className={`nfc-button ${
+                nfcStatus === "writing" ? "nfc-active" : ""
+              }`}
+            >
+              {nfcShareText}
+            </button>
+            <button
+              onClick={handleNFCReceive}
+              disabled={nfcStatus === "writing" || nfcStatus === "reading"}
+              className={`nfc-button secondary ${
+                nfcStatus === "reading" ? "nfc-active" : ""
+              }`}
+            >
+              {nfcReceiveText}
+            </button>
+          </div>
+        )}
+
+        {nfcError && (
+          <div className="nfc-error">
+            {language === "ta" ? "⚠️ " : "⚠️ "}
+            {nfcError.message}
+          </div>
+        )}
 
         {groceryCategories.map((category) => (
           <CategorySection

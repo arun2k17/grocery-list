@@ -1,6 +1,60 @@
-# React + TypeScript + Vite
+# 🛒 Grocery List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A bilingual (Tamil/English) grocery list web app for Tamil households. Built with React, TypeScript, and Vite, featuring NFC tap-to-share for seamless list sharing between mobile devices.
+
+## Features
+
+- **Bilingual Support**: Switch between Tamil (default) and English
+- **173 Grocery Items**: Organized across 10 categories (vegetables, fruits, pulses, grains, spices, dairy, oil, pooja items, household items)
+- **NFC Tap-to-Share**: Share your grocery list between Android devices with a tap (Chrome on Android only)
+- **Copy to Clipboard**: Export selected items as Markdown
+- **LocalStorage Persistence**: Your selections are saved automatically
+- **Mobile-First Design**: Built with Pico CSS for clean, responsive UI
+
+## How to Use
+
+1. **Select Items**: Check the items you need to buy
+2. **Share via NFC** (Android only):
+   - Person A: Select items → Tap "Share via Tap" → Hold phone ready
+   - Person B: Tap "Receive via Tap" → Bring phones together
+   - Lists are merged automatically
+3. **Copy to Clipboard**: Click the copy button to export as Markdown
+4. **Language Preference**: Saved automatically in your browser
+
+## Tech Stack
+
+- React 19.2.0
+- TypeScript
+- Vite 7.3.0
+- Pico CSS 2.1.1
+- Web NFC API (experimental)
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Build & Deploy
+
+```bash
+npm run build
+```
+
+Builds to `docs/` folder for GitHub Pages deployment.
+
+## NFC Support
+
+NFC sharing requires:
+
+- Chrome on Android
+- HTTPS or localhost
+- NFC enabled on both devices
+
+The feature gracefully hides on unsupported browsers.
+
+---
 
 Currently, two official plugins are available:
 
@@ -17,9 +71,9 @@ If you are developing a production application, we recommend updating the config
 
 ```js
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       // Other configs...
 
@@ -34,40 +88,40 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...
     },
   },
-])
+]);
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       // Other configs...
       // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
+      reactX.configs["recommended-typescript"],
       // Enable lint rules for React DOM
       reactDom.configs.recommended,
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...
     },
   },
-])
+]);
 ```
