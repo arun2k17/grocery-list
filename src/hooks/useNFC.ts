@@ -62,7 +62,9 @@ export function useNFC(): UseNFCResult {
     }, []);
 
     const writeData = useCallback(async (data: SelectedItems) => {
+        console.log('[NFC Write] Starting...', { itemCount: Object.keys(data).length });
         if (!isSupported) {
+            console.error('[NFC Write] Not supported');
             setError({ message: 'NFC not supported in this browser' });
             setStatus('error');
             return;
@@ -71,16 +73,22 @@ export function useNFC(): UseNFCResult {
         try {
             setStatus('writing');
             setError(null);
+            console.log('[NFC Write] Status set to writing');
 
             const ndef = new NDEFReader();
+            const jsonString = JSON.stringify(data);
+            console.log('[NFC Write] Data prepared:', { length: jsonString.length, preview: jsonString.slice(0, 100) });
+
             const message = {
                 records: [{
                     recordType: "text",
-                    data: JSON.stringify(data)
+                    data: jsonString
                 }]
             };
 
+            console.log('[NFC Write] Calling write()...');
             await ndef.write(message);
+            console.log('[NFC Write] ✓ Write successful!');
             setStatus('success');
 
             // Auto-reset after 2 seconds
@@ -88,24 +96,27 @@ export function useNFC(): UseNFCResult {
                 setStatus('idle');
             }, 2000);
         } catch (err: unknown) {
-            console.error('NFC write error:', err);
+            console.error('[NFC Write] ✗ Error:', err);
             const error = err as Error;
+            console.error('[NFC Write] Error details:', { name: error.name, message: error.message });
             setError({
-                message: error.message || 'Failed to write NFC data',
+                message: `${error.name}: ${error.message}`,
                 code: error.name
             });
             setStatus('error');
 
-            // Auto-reset error after 3 seconds
+            // Auto-reset error after 5 seconds (increased for reading)
             setTimeout(() => {
                 setStatus('idle');
                 setError(null);
-            }, 3000);
+            }, 5000);
         }
     }, [isSupported]);
 
     const readData = useCallback(async (onData: (data: SelectedItems) => void) => {
+        console.log('[NFC Read] Starting scan...');
         if (!isSupported) {
+            console.error('[NFC Read] Not supported');
             setError({ message: 'NFC not supported in this browser' });
             setStatus('error');
             return;
@@ -114,16 +125,25 @@ export function useNFC(): UseNFCResult {
         try {
             setStatus('reading');
             setError(null);
+            console.log('[NFC Read] Status set to reading');
 
             const ndef = new NDEFReader();
+            console.log('[NFC Read] Calling scan()...');
             await ndef.scan();
+            console.log('[NFC Read] ✓ Scan started, waiting for tag...');
 
             ndef.onreading = (event: NDEFReadingEvent) => {
+                console.log('[NFC Read] ✓ Tag detected!', { recordCount: event.message.records.length, serial: event.serialNumber });
                 try {
                     const record = event.message.records[0];
+                    console.log('[NFC Read] First record:', { recordType: record.recordType, dataLength: record.data.byteLength });
+
                     const textDecoder = new TextDecoder();
                     const text = textDecoder.decode(record.data);
+                    console.log('[NFC Read] Decoded text:', { length: text.length, preview: text.slice(0, 100) });
+
                     const data = JSON.parse(text) as SelectedItems;
+                    console.log('[NFC Read] ✓ Parsed data:', { itemCount: Object.keys(data).length });
 
                     onData(data);
                     setStatus('success');
@@ -133,16 +153,17 @@ export function useNFC(): UseNFCResult {
                         setStatus('idle');
                     }, 2000);
                 } catch (err) {
-                    console.error('Failed to parse NFC data:', err);
-                    setError({ message: 'Invalid data received' });
+                    console.error('[NFC Read] ✗ Parse error:', err);
+                    const error = err as Error;
+                    setError({ message: `Parse failed: ${error.message}` });
                     setStatus('error');
                 }
             };
 
             ndef.onerror = (err: Error) => {
-                console.error('NFC read error:', err);
+                console.error('[NFC Read] ✗ Read error event:', err);
                 setError({
-                    message: err.message || 'Failed to read NFC data',
+                    message: `${err.name}: ${err.message}`,
                     code: err.name
                 });
                 setStatus('error');
@@ -150,14 +171,15 @@ export function useNFC(): UseNFCResult {
                 setTimeout(() => {
                     setStatus('idle');
                     setError(null);
-                }, 3000);
+                }, 5000);
             };
 
         } catch (err: unknown) {
-            console.error('NFC scan error:', err);
+            console.error('[NFC Read] ✗ Scan failed:', err);
             const error = err as Error;
+            console.error('[NFC Read] Error details:', { name: error.name, message: error.message });
             setError({
-                message: error.message || 'Failed to start NFC scan',
+                message: `${error.name}: ${error.message}`,
                 code: error.name
             });
             setStatus('error');
@@ -165,7 +187,7 @@ export function useNFC(): UseNFCResult {
             setTimeout(() => {
                 setStatus('idle');
                 setError(null);
-            }, 3000);
+            }, 5000);
         }
     }, [isSupported]);
 

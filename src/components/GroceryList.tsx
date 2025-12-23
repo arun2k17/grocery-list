@@ -33,16 +33,31 @@ export function GroceryList() {
   };
 
   const handleNFCShare = async () => {
+    console.log("[App] Share button clicked", {
+      selectedCount: Object.keys(selectedItems).length,
+    });
     await writeData(selectedItems);
   };
 
   const handleNFCReceive = async () => {
+    console.log("[App] Receive button clicked");
     await readData((receivedData) => {
+      console.log("[App] Data received:", {
+        itemCount: Object.keys(receivedData).length,
+      });
       // Merge with existing selections
-      setSelectedItems((prev: SelectedItems) => ({
-        ...prev,
-        ...receivedData,
-      }));
+      setSelectedItems((prev: SelectedItems) => {
+        const merged = {
+          ...prev,
+          ...receivedData,
+        };
+        console.log("[App] Merged selections:", {
+          prevCount: Object.keys(prev).length,
+          receivedCount: Object.keys(receivedData).length,
+          mergedCount: Object.keys(merged).length,
+        });
+        return merged;
+      });
     });
   };
 
